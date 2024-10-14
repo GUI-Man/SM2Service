@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../iconfont/iconfont.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/ConvertHtml.css">
+<link rel="stylesheet" href="../css/TP.css">
+
+<body>
+<h1>你好，TP!</h1>
+<button class="generate_Key">点击获取公私钥信息，并且初始化</button><br>
+<ul>
+    <li>SN的公钥x: <input type="text" class="SNPubx" readonly></li>
+    <li>SN的公钥y: <input type="text"  class="SNPuby" readonly></li>
+    <li>UE的公钥x: <input type="text" class="UEPubx" readonly></li>
+    <li>UE的公钥y: <input type="text" class="UEPuby" readonly></li>
+    <li>HN的公钥x: <input type="text" class="HNPubx" readonly></li>
+    <li>HN的公钥y: <input type="text" class="HNPuby" readonly></li>
+</ul>
+
+<ul>
+    <li>你的公钥x: <input type="text" class="Pubx" readonly></li>
+    <li>你的公钥y: <input type="text"  class="Puby" readonly></li>
+    <li>你的私钥: <input type="text" class="Priv" readonly></li>
+</ul>
+<ul>
+    <li>你收到的时间戳<input type="text" class="RID" readonly></li>
+    <li>AID1<input type="text" class="AID_1" readonly></li>
+</ul>
+<div class="info"></div>
+<script src="https://fastly.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.querySelector('.generate_Key').addEventListener('click', () => {
+        axios({
+            url: 'http://localhost:8080/generate_TPAllinfo',
+            // 指定请求方法
+            method: 'get',
+            params: {
+            }
+        }).then(result => {
+            console.log(result);
+            document.querySelector(".Priv").value=result.data.data["tppriv"];
+            document.querySelector(".Pubx").value=result.data.data["tppubx"];
+            document.querySelector(".Puby").value=result.data.data["tppuby"];
+            document.querySelector(".HNPubx").value=result.data.data["hnpubx"];
+            document.querySelector(".HNPuby").value=result.data.data["hnpuby"];
+            document.querySelector(".SNPubx").value=result.data.data["snpubx"];
+            document.querySelector(".SNPuby").value=result.data.data["snpuby"];
+            document.querySelector(".UEPubx").value=result.data.data["uepubx"];
+            document.querySelector(".UEPuby").value=result.data.data["uepuby"];
+            // document.querySelector(".AID_1").value=result.data.data["aid_1Base64"];
+            // document.querySelector(".AID_2").value=result.data.data["aid_2Base64"];
+            // document.querySelector(".Timestamp").value=result.data.data["timestamp"];
+        }).catch(error=>{
+            console.log(error.response.data.message);
+            alert(error.response.data.message);
+        })
+    })
+</script>
+</body>
+</html>

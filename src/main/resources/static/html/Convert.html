@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../iconfont/iconfont.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/ConvertHtml.css">
+
+<body>
+<button class="generate_Key">生成公私钥！</button><br>
+<ul>
+    <li>公钥x: <input type="text" class="Pubx" readonly></li>
+    <li>公钥y: <input type="text"  class="Puby" readonly></li>
+    <li>私钥: <input type="text" class="Priv" readonly></li>
+</ul>
+<script src="https://fastly.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.querySelector('.generate_Key').addEventListener('click', () => {
+        axios({
+            url: 'http://localhost:8080/generate_Key',
+            // 指定请求方法
+            method: 'get',
+            params: {
+            }
+        }).then(result => {
+            console.log(result)
+            document.querySelector(" .Pubx").value=result.data.data["PublicKey_x"];
+            document.querySelector(" .Puby").value=result.data.data["PublicKey_y"];
+            document.querySelector(".Priv").value= result.data.data["PrivateKey"];
+            console.log(result.data.data["PrivateKey"]);
+        }).catch(error=>{
+            console.log(error.response.data.message);
+            alert(error.response.data.message);
+        })
+    })
+</script>
+</body>
+</html>

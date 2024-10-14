@@ -1,0 +1,9 @@
+ul li{
+    font-size: 16px;
+}
+ul li input{
+    width: 1600px;
+    border-color: #666666;
+    border-width: 1px;
+    border-style: dotted;
+}
